@@ -99,7 +99,19 @@ func updateDnsHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+	c, err := config()
+	if err != nil {
+		return
+	}
+	host := c.Host
+	if host == "" {
+		host = "0.0.0.0"
+	}
+	port := c.Port
+	if port == "" {
+		port = "8080"
+	}
 	http.HandleFunc("/update-dns", updateDnsHandler)
 	fmt.Println("Server is running on port 8080")
-	http.ListenAndServe(":8080", nil)
+	http.ListenAndServe(host+":"+port, nil)
 }
