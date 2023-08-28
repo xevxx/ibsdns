@@ -1,9 +1,12 @@
 # Get this from internet.bs
-apiKey: RANDOMCHARACTERS
+apiKeyInternetBS: RANDOMCHARACTERS
 # Get this from intertnet.bs
 password: MORERANDOMCHARACHTERS
 # Domain you wish to keep updated to the dynamic ip
-domain: home.jmainguy.com
+domain: WWW.EXAMPLE.COM
 # API url
 url: https://api.internet.bs/Domain/DnsRecord/Update
-
+# API Key for app access
+apiKey: PUTYOuROWNUNIQUEKEYHERE
+# listen on ip address
+host: 0.0.0.0
