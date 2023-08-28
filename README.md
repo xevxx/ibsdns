@@ -13,7 +13,7 @@ APIkey is user created in config
 Strongly suggest that the app is hosted behind a web server like NGINX or Apache with SSL configured and enabled (not secure to snooping otherwise and if someone gets your API they can cause havoc (change your A records))
 
 ### Note:
-I had to prepay money into Internet.bs to get the API enabled (minimum level in GBP was £8), this credit against future purchases so using this solution is still free.
+I had to prepay money into Internet.bs to get the API enabled (minimum level in GBP was £8), this is credit against future purchases so using this solution is still free.
 
 # original readme below
 ## Why?
