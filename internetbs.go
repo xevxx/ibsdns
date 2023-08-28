@@ -3,16 +3,16 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/url"
 	"strings"
 )
 
-func updateDns(apiKey, password, fullrecordname, recordtype, newvalue string) (transactid, status, message string) {
+func updateDns(urlConfig, apiKey, password, fullrecordname, recordtype, newvalue string) (transactid, status, message string) {
 
 	// Test Api
-	Url := "https://api.internet.bs/Domain/DnsRecord/Update"
+	Url := urlConfig
 
 	param := url.Values{}
 	param.Add("apiKey", apiKey)
@@ -34,7 +34,7 @@ func updateDns(apiKey, password, fullrecordname, recordtype, newvalue string) (t
 		fmt.Println(err)
 	}
 	defer resp.Body.Close()
-	jsonblob, err := ioutil.ReadAll(resp.Body)
+	jsonblob, err := io.ReadAll(resp.Body)
 	if err != nil {
 		fmt.Println(err)
 	}
