@@ -10,3 +10,5 @@ url: https://api.internet.bs/Domain/DnsRecord/Update
 apiKey: PUTYOuROWNUNIQUEKEYHERE
 # listen on ip address
 host: 0.0.0.0
+# listen on port
+port: 8080
