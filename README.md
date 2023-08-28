@@ -1,5 +1,18 @@
-# ibsdns
+# ibsdns-api
 InternetBS DNS Updater
+
+## Why?
+updated the repo changing the app to a server application that is accessed using a apikey and a single endpoint. the user should install the app on a server/ computer with static IP as allowed in Internet BS API. Access the endpoint with the configured API key and the app will record your sending ip and update the configured domains to that ip address if different from the last checks.
+
+serveripaddress/update-dns 
+
+with a key passed as a header X-API-KEY
+
+APIkey is user created in config
+
+Strong suggest that the app is hosted behind a web server linke NGINX or Apache with SSL configured and enabled (not secure to snooping otherwise and if someone gets your API they can cause havoc (change your A records))
+
+# original readme below
 ## Why?
 My buddy Keenan wanted to update home.example.com to point to his IP at home,
 however he has a dynamic IP provided to home and so he needed a way to keep it current.
