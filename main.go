@@ -1,7 +1,9 @@
 package main
 
 import (
+	"errors"
 	"fmt"
+	"net"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -12,31 +14,52 @@ import (
 var mutex sync.Mutex
 
 // getClientIP helps extract the client IP address from the request headers
-func getClientIP(r *http.Request) string {
+func getClientIP(r *http.Request) (string, error) {
 	ip := strings.Split(r.RemoteAddr, ":")[0]
 	if forwarded := r.Header.Get("X-Forwarded-For"); forwarded != "" {
-		ip = strings.Split(forwarded, ",")[0]
+		ips := strings.Split(forwarded, ",")
+		if len(ips) > 0 {
+			ip = strings.TrimSpace(ips[0]) // Using the first IP in the list
+		}
 	}
-	return ip
+
+	if isValidIP(ip) {
+		return ip, nil
+	} else {
+		return "", errors.New("invalid ip address")
+	}
 }
 
-func loadLastIP() string {
+// isValidIP checks if the given string is a valid IPv4 or IPv6 address
+func isValidIP(ip string) bool {
+	return net.ParseIP(ip) != nil
+}
+
+func loadLastIP() (string, error) {
 	configDir, err := os.UserConfigDir()
 	if err != nil {
-		return ""
+		return "", err
 	}
+
 	configPath := filepath.Join(configDir, "ibsdns", "lastIP.txt")
 	var lastIP string
+
 	// Check if file exists
 	if _, err := os.Stat(configPath); err == nil {
 		data, err := os.ReadFile(configPath)
 		if err != nil {
-			return ""
+			return "", err
 		}
 		lastIP = strings.TrimSpace(string(data))
+	} else if os.IsNotExist(err) {
+		// Handle the case where the file does not exist
+		return "", nil
+	} else {
+		// Handle other types of errors
+		return "", err
 	}
 
-	return lastIP
+	return lastIP, nil
 }
 
 func saveLastIP(lastIP string) error {
@@ -61,15 +84,30 @@ func saveLastIP(lastIP string) error {
 }
 
 func updateDnsHandler(w http.ResponseWriter, r *http.Request) {
-	// Extract the client's IP from the request
-	//clientIP := strings.Split(r.RemoteAddr, ":")[0]
-	lastIP := loadLastIP()
 
-	clientIP := getClientIP(r)
+	apiKey := r.Header.Get("X-API-Key")
+
+	clientIP, err := getClientIP(r)
+	if err != nil {
+		http.Error(w, "Unable to get client IP", http.StatusInternalServerError)
+		return
+	}
+
+	// Load last known IP
+	lastIP, err := loadLastIP()
+	if err != nil && lastIP != "" {
+		http.Error(w, "Unable to load last known IP", http.StatusInternalServerError)
+		return
+	}
 
 	c, err := config()
 	if err != nil {
 		http.Error(w, "Unable to load config", http.StatusInternalServerError)
+		return
+	}
+
+	if apiKey != c.ApiKey { // Pass the expected API key from config
+		http.Error(w, "Invalid API Key", http.StatusUnauthorized)
 		return
 	}
 
