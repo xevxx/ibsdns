@@ -31,10 +31,10 @@ I had to prepay money into Internet.bs to get the API enabled (minimum level in 
 ## Installation
 
 Clone the repository:
-git clone https://github.com/xevxx/ibdns.git
+git clone https://github.com/xevxx/ibdns-api.git
 
 Navigate to the project directory:
-cd ibdns
+cd ibdns-api
 
 
 Build the application:
