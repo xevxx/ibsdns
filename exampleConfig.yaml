@@ -4,3 +4,6 @@ apiKey: RANDOMCHARACTERS
 password: MORERANDOMCHARACHTERS
 # Domain you wish to keep updated to the dynamic ip
 domain: home.jmainguy.com
+# API url
+url: https://api.internet.bs/Domain/DnsRecord/Update
+
