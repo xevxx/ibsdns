@@ -65,10 +65,15 @@ To run the server:
 To update the DNS record, make a POST request to the API endpoint with the applicable API key:
 ```
 curl -X POST http://serverip:8080/updateDns
+```
 or if using web sserver infront 
+```
 curl -X POST https://domainname.com/updateDns
 ```
-# USE A WEB SERVER TO ADD SSL
+# USE A WEB SERVER TO ADD SSL USING CERTBOT 
+
+something like
+https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-20-04
 
 ## API Endpoints
 
