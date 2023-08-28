@@ -62,9 +62,10 @@ To run the server:
 
 
 
-To update the DNS record, make a POST request to the API endpoint:
+To update the DNS record, make a POST request to the API endpoint with the applicable API key:
+```
 curl -X POST https://serverip:8080/updateDns
-
+```
 DO USE A WEB SERVER TO ADD SSL
 
 ## API Endpoints
