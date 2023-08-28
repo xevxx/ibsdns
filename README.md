@@ -15,6 +15,64 @@ Strongly suggest that the app is hosted behind a web server like NGINX or Apache
 ### Note:
 I had to prepay money into Internet.bs to get the API enabled (minimum level in GBP was £8), this is credit against future purchases so using this solution is still free.
 
+
+## Features
+
+- Reads configuration from a YAML file
+- Supports multiple domains
+- Can be used behind a reverse proxy
+- Checks if the client's IP address has changed before updating the DNS record
+
+## Prerequisites
+
+- Go 1.16 or higher
+- A configured DNS server that you have access to (if you want to test DNS functionality)
+
+## Installation
+
+Clone the repository:
+git clone https://github.com/xevxx/ibdns.git
+
+Navigate to the project directory:
+cd ibdns
+
+
+Build the application:
+go build -o ibdns-api
+
+
+
+## Configuration
+
+Before running the server, you'll need to configure it by creating a `config.yaml` file. Here is a sample configuration:
+```
+Host: "0.0.0.0"
+Port: 8080
+ApiKey: "your-api-key"
+ApiKeyInternetBS: "internetbs supplied api key"
+Password: "internetbs supplied password"
+Domain: "example.com,example2.com"
+```
+
+
+## Usage
+
+To run the server:
+./ibsdns-api
+
+
+
+To update the DNS record, make a POST request to the API endpoint:
+curl -X POST https://serverip:8080/updateDns
+
+DO USE A WEB SERVER TO ADD SSL
+
+## API Endpoints
+
+- **POST /updateDns**: Update the DNS record. It uses the client's IP address for the update.
+
+
+
 # original readme below
 ## Why?
 My buddy Keenan wanted to update home.example.com to point to his IP at home,
