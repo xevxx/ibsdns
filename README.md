@@ -66,7 +66,7 @@ To update the DNS record, make a POST request to the API endpoint with the appli
 ```
 curl -X POST http://serverip:8080/update-dns
 ```
-or if using web sserver infront 
+or if using web server infront 
 ```
 curl -X POST https://domainname.com/update-dns
 ```
